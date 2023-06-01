@@ -34,10 +34,6 @@ public class ControladorApi {
 	private IServiciosApiNasa servicioApiNasa;
 	
 
-
-
-
-
 	@GetMapping("{nombreRobot}/listar")
 	public ResponseEntity<?> listar(@PathVariable(required = true) String nombreRobot ){
 		
