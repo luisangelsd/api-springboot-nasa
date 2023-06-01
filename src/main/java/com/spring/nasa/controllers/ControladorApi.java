@@ -24,9 +24,9 @@ import com.spring.nasa.model.services.IServiciosApiNasa;
 public class ControladorApi {
 	
 	//-- Variables globales
-	public Map<String, Object> response=new HashMap<>();
-	public List<DtoPhoto> listDtoPhoto=new ArrayList<>();
-	
+	public Map<String, Object> response= new HashMap<>();
+	public List<DtoPhoto> listDtoPhoto; 
+	private DtoApi datos;
 	
 	//--Inyeccion de servicios
 	@Autowired
@@ -34,37 +34,35 @@ public class ControladorApi {
 	private IServiciosApiNasa servicioApiNasa;
 	
 
-	
-	
-	
+
+
+
+
 	@GetMapping("{nombreRobot}/listar")
 	public ResponseEntity<?> listar(@PathVariable(required = true) String nombreRobot ){
+		
+		
 		try {
 
 			//-- Consumir servicio  y validar que no este vacia
-			DtoApi datos=servicioApiNasa.listarFotos(nombreRobot);
+			this.datos=servicioApiNasa.listarFotos(nombreRobot);
 			
-			if (datos.getPhotos()==null) {
+			if (datos.getPhotos().length<=0) {
 				this.response.put("mensaje", "Lista Vacia");
 				return new ResponseEntity<Map<String, Object>>(this.response, HttpStatus.NO_CONTENT);
 			}
 			
 			
 			//----Convertir datos a ArrayList
+			this.listDtoPhoto=new ArrayList<>();
 			for (DtoPhoto dtoPhoto : datos.getPhotos()) {
 				this.listDtoPhoto.add(dtoPhoto);
 			}
 			
-			
-			//---- Validar que no este vacia
-			if (this.listDtoPhoto.isEmpty()) {
-				this.response.put("mensaje", "Lista Vacia");
-				return new ResponseEntity<Map<String, Object>>(this.response, HttpStatus.NO_CONTENT);
-			}
-
-			
+		
 			//-- Regresar respuesta
-			return new ResponseEntity<List<DtoPhoto>>(this.listDtoPhoto, HttpStatus.OK);	
+			return new ResponseEntity<List<DtoPhoto>>(this.listDtoPhoto, HttpStatus.OK);
+			
 			
 		} catch (Exception e) {
 			this.response.put("mensaje", e.getMessage());

@@ -17,9 +17,6 @@ public class ServiciosApiNasa implements IServiciosApiNasa {
 	
 	@Override
 	public DtoApi listarFotos(String nombreRobot) throws Exception {
-		
-		System.out.println("**********************---");
-		System.out.println(nombreRobot);
 		return this.feingApiNasa.listarFotos(nombreRobot);
 	}
 	

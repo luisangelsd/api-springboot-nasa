@@ -11,10 +11,8 @@ import com.spring.nasa.model.dtos.DtoApi;
 
 @FeignClient(name = "API.NASA", url = "https://api.nasa.gov/")
 public interface IServiciosOpenFeingApiNasa {
-	//https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=SGOXgk9N8ZF7amvF0CvanZne1pdDKSAqqYNoqSvG
 	
 	@GetMapping("mars-photos/api/v1/rovers/{robot}/photos?sol=1000&api_key=SGOXgk9N8ZF7amvF0CvanZne1pdDKSAqqYNoqSvG")
-	public DtoApi listarFotos(@PathVariable( name = "robot") String robot ) throws Exception;
-	
+	public DtoApi listarFotos(@PathVariable( name = "robot") String robot ) throws Exception;	
 
 }
